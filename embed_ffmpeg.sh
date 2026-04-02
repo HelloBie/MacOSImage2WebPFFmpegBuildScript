@@ -21,6 +21,29 @@ FFMPEG_BUILDCONF_DEST="${RESOURCES_DIR}/ffmpeg-buildconf.txt"
 FFMPEG_BUILD_SCRIPT_DEST="${RESOURCES_DIR}/ffmpeg-build-script.sh"
 FFMPEG_CAPABILITIES_DEST="${RESOURCES_DIR}/ffmpeg-capabilities.txt"
 
+strip_quarantine_attributes() {
+    target_path="$1"
+
+    if [ ! -e "${target_path}" ]; then
+        return 0
+    fi
+
+    xattr -r -d com.apple.quarantine "${target_path}" 2>/dev/null || true
+}
+
+copy_without_quarantine() {
+    source_path="$1"
+    dest_path="$2"
+
+    strip_quarantine_attributes "${source_path}"
+
+    if ! ditto --noqtn "${source_path}" "${dest_path}" 2>/dev/null; then
+        ditto "${source_path}" "${dest_path}"
+    fi
+
+    strip_quarantine_attributes "${dest_path}"
+}
+
 find_preferred_ffmpeg() {
     for candidate in \
         "${FFMPEG_SOURCE:-}" \
@@ -91,7 +114,7 @@ copy_dependency() {
     dest_path="$2"
 
     if [ ! -f "${dest_path}" ]; then
-        ditto "${source_path}" "${dest_path}"
+        copy_without_quarantine "${source_path}" "${dest_path}"
         chmod 755 "${dest_path}"
     fi
 }
@@ -189,15 +212,15 @@ sign_embedded_runtime() {
 
 copy_compliance_materials() {
     if [ -f "${THIRD_PARTY_NOTICES_SOURCE}" ]; then
-        ditto "${THIRD_PARTY_NOTICES_SOURCE}" "${THIRD_PARTY_NOTICES_DEST}"
+        copy_without_quarantine "${THIRD_PARTY_NOTICES_SOURCE}" "${THIRD_PARTY_NOTICES_DEST}"
     fi
 
     if [ -f "${FFMPEG_LICENSE_SOURCE}" ]; then
-        ditto "${FFMPEG_LICENSE_SOURCE}" "${FFMPEG_LICENSE_DEST}"
+        copy_without_quarantine "${FFMPEG_LICENSE_SOURCE}" "${FFMPEG_LICENSE_DEST}"
     fi
 
     if [ -f "${FFMPEG_BUILD_SCRIPT_SOURCE}" ]; then
-        ditto "${FFMPEG_BUILD_SCRIPT_SOURCE}" "${FFMPEG_BUILD_SCRIPT_DEST}"
+        copy_without_quarantine "${FFMPEG_BUILD_SCRIPT_SOURCE}" "${FFMPEG_BUILD_SCRIPT_DEST}"
         chmod 644 "${FFMPEG_BUILD_SCRIPT_DEST}" 2>/dev/null || true
     fi
 
@@ -232,6 +255,8 @@ copy_compliance_materials() {
         printf '%s\n' "supports_gif_output=${supports_gif}"
         printf '%s\n' "avif_encoder=${avif_encoder}"
     } > "${FFMPEG_CAPABILITIES_DEST}"
+
+    strip_quarantine_attributes "${RESOURCES_DIR}"
 }
 
 FFMPEG_SOURCE_PATH="$(find_preferred_ffmpeg || true)"
@@ -242,7 +267,7 @@ fi
 
 mkdir -p "${HELPERS_DIR}" "${FRAMEWORKS_DIR}" "${RESOURCES_DIR}"
 
-ditto "${FFMPEG_SOURCE_PATH}" "${FFMPEG_DEST}"
+copy_without_quarantine "${FFMPEG_SOURCE_PATH}" "${FFMPEG_DEST}"
 chmod 755 "${FFMPEG_DEST}"
 
 copy_prebundled_runtime
@@ -252,3 +277,5 @@ sign_embedded_runtime
 copy_compliance_materials
 
 printf '%s\n' "${FFMPEG_SOURCE_PATH}" > "${STAMP_FILE}"
+strip_quarantine_attributes "${STAMP_FILE}"
+strip_quarantine_attributes "${APP_CONTENTS}"
