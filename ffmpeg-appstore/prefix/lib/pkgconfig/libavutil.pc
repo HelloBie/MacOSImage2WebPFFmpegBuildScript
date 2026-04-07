@@ -1,0 +1,14 @@
+prefix=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix
+exec_prefix=${prefix}
+libdir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/lib
+includedir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 60.26.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: -lm -lz -framework CoreFoundation -framework CoreVideo -framework CoreMedia -pthread
+Cflags: -I${includedir}

@@ -1,0 +1,14 @@
+prefix=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix
+exec_prefix=${prefix}
+libdir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/lib
+includedir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/include
+
+Name: libswresample
+Description: FFmpeg audio resampling library
+Version: 6.3.100
+Requires: 
+Requires.private: libavutil >= 60.26.100
+Conflicts:
+Libs: -L${libdir}  -lswresample 
+Libs.private: -lm
+Cflags: -I${includedir}

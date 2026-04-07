@@ -1,0 +1,47 @@
+
+  configuration:
+    --prefix=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix
+    --disable-autodetect
+    --enable-ffmpeg
+    --disable-avdevice
+    --disable-ffplay
+    --disable-ffprobe
+    --enable-shared
+    --disable-static
+    --disable-debug
+    --disable-doc
+    --disable-network
+    --disable-libvmaf
+    --disable-sdl2
+    --enable-zlib
+    --disable-indevs
+    --disable-outdevs
+    --enable-pthreads
+    --enable-decoder=png
+    --enable-decoder=gif
+    --enable-decoder=av1
+    --enable-encoder=png
+    --enable-encoder=mjpeg
+    --enable-encoder=gif
+    --enable-muxer=image2
+    --enable-muxer=gif
+    --enable-muxer=webp
+    --enable-muxer=avif
+    --enable-demuxer=image2
+    --enable-demuxer=gif
+    --enable-demuxer=mov
+    --enable-demuxer=matroska
+    --enable-parser=av1
+    --disable-decoder=h264
+    --disable-decoder=hevc
+    --disable-parser=h264
+    --disable-parser=hevc
+    --enable-protocol=file
+    --enable-protocol=pipe
+    --enable-filter=scale
+    --enable-filter=format
+    --enable-libwebp
+    --enable-libdav1d
+    --enable-libsvtav1
+
+Exiting with exit code 0

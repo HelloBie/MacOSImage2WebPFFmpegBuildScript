@@ -1,0 +1,14 @@
+prefix=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix
+exec_prefix=${prefix}
+libdir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/lib
+includedir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 62.28.100
+Requires: 
+Requires.private: libswresample >= 6.3.100, libavutil >= 60.26.100
+Conflicts:
+Libs: -L${libdir}  -lavcodec 
+Libs.private: -pthread -lm -L/opt/homebrew/Cellar/dav1d/1.5.3/lib -ldav1d -L/opt/homebrew/Cellar/svt-av1/4.1.0/lib -lSvtAv1Enc -L/opt/homebrew/opt/webp/lib -lwebp -lz
+Cflags: -I${includedir}

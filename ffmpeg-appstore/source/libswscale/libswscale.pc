@@ -1,0 +1,14 @@
+prefix=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix
+exec_prefix=${prefix}
+libdir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/lib
+includedir=/Users/autumn/Desktop/code/iOS/Image2WebP/ffmpeg-appstore/prefix/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 9.5.100
+Requires: 
+Requires.private: libavutil >= 60.26.100
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: -lm
+Cflags: -I${includedir}
