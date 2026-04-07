@@ -1,16 +1,16 @@
 # MacOSImage2WebPFFmpegBuildScript
 
-This repository publishes the corresponding source materials for the FFmpeg-based runtime bundled with the macOS application `ImageToWebP`.
+This repository publishes the corresponding source materials for the FFmpeg-based runtime bundled with the macOS application `Transcoding-Compress-Frame`.
 
 ## Scope
 
 This repository covers the bundled FFmpeg runtime only.
 
-It does not contain the full source code of the `ImageToWebP` application itself.
+It does not contain the full source code of the `Transcoding-Compress-Frame` application itself.
 
 ## Release Correspondence
 
-Application: `ImageToWebP`  
+Application: `Transcoding-Compress-Frame`  
 Application version: `1.0.0`  
 Build: `1`  
 FFmpeg version: `8.1`  
